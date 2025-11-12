@@ -14,8 +14,10 @@ function Model({ path, position = [0, 0, 0], rotation = [0, 0, 0] }) {
         child.material = new THREE.MeshStandardMaterial({
           map: child.material.map,
           color: child.material.color || '#ffffff',
-          roughness: 0.5,
-          metalness: 0.2,
+          roughness: 0.3,
+          metalness: 0.1,
+          emissive: '#000000',
+          emissiveIntensity: 0.1,
         });
         child.castShadow = true;
         child.receiveShadow = true;
@@ -38,13 +40,13 @@ function ModelCard({ modelName, modelPath, position, rotation }) {
           shadows
           onError={() => setError(true)}
         >
-          {/* Luz ambiente suave */}
-          <ambientLight intensity={1} />
+          {/* Luz ambiente mais intensa */}
+          <ambientLight intensity={1.5} />
           
           {/* Luz principal fixa - sempre na mesma posição relativa */}
           <directionalLight 
             position={[5, 5, 5]}  // Posição fixa relativa
-            intensity={1.1}
+            intensity={1.8}
             castShadow
             shadow-mapSize-width={2048}
             shadow-mapSize-height={2048}
@@ -56,10 +58,20 @@ function ModelCard({ modelName, modelPath, position, rotation }) {
             shadow-bias={-0.0005}
           />
           
-          {/* Luz de preenchimento (opcional) */}
+          {/* Luzes de preenchimento para eliminar sombras escuras */}
           <pointLight 
             position={[-3, 2, -2]} 
-            intensity={0.3} 
+            intensity={0.6} 
+            color="#ffffff"
+          />
+          <pointLight 
+            position={[3, 2, 2]} 
+            intensity={0.4} 
+            color="#ffffff"
+          />
+          <pointLight 
+            position={[0, 3, 0]} 
+            intensity={0.5} 
             color="#ffffff"
           />
 
@@ -97,20 +109,62 @@ function ModelCard({ modelName, modelPath, position, rotation }) {
 function App() {
   const models = [
     { 
-      name: 'Prato', 
-      file: 'model1.glb',
-      position: [0, -1, 0],
-      rotation: [0, 0, 0]
-    },
-    { 
-      name: 'Modelo 2', 
-      file: 'model2.glb',
+      name: 'Vaso', 
+      file: 'vaso.glb',
       position: [0, 0, 0],
       rotation: [0, 0, 0]
     },
     { 
-      name: 'Modelo 3', 
-      file: 'model3.glb',
+      name: 'Barro', 
+      file: 'barro.glb',
+      position: [0, 0, 0],
+      rotation: [0, 0, 0]
+    },
+    { 
+      name: 'Bule', 
+      file: 'bule.glb',
+      position: [0, 0, 0],
+      rotation: [0, 0, 0]
+    },
+    { 
+      name: 'Cadeira', 
+      file: 'cadeira.glb',
+      position: [0, 0, 0],
+      rotation: [0, 0, 0]
+    },
+    { 
+      name: 'Canoa', 
+      file: 'canoa.glb',
+      position: [0, 0, 0],
+      rotation: [0, 0, 0]
+    },
+    { 
+      name: 'Carranca', 
+      file: 'carranca.glb',
+      position: [0, 0, 0],
+      rotation: [0, 0, 0]
+    },
+    { 
+      name: 'Jarro de Metal', 
+      file: 'jarroMetal.glb',
+      position: [0, 0, 0],
+      rotation: [0, 0, 0]
+    },
+    { 
+      name: 'Lampião', 
+      file: 'lampiao.glb',
+      position: [0, 0, 0],
+      rotation: [0, 0, 0]
+    },
+    { 
+      name: 'Tigre', 
+      file: 'tigre.glb',
+      position: [0, 0, 0],
+      rotation: [0, 0, 0]
+    },
+    { 
+      name: 'Balaio', 
+      file: 'balaio.glb',
       position: [0, 0, 0],
       rotation: [0, 0, 0]
     },
