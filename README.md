@@ -111,8 +111,6 @@ position: [0, -1, 0]  // [x, y, z]
 ```bash
 npm start          # Inicia o servidor de desenvolvimento
 npm run build      # Cria build de produção
-npm test           # Executa os testes
-npm run eject      # Remove dependência do Create React App
 ```
 
 ## 📱 Controles de navegação
@@ -120,16 +118,7 @@ npm run eject      # Remove dependência do Create React App
 - **Rotação**: Clique e arraste
 - **Zoom**: Scroll do mouse ou pinch (mobile)
 - **Panorâmica**: Clique direito + arraste (ou dois dedos no mobile)
-
-## ⚠️ Solução de problemas
-
-### **Erro "Could not load model":**
-- Verifique se o arquivo .glb está na pasta `public/models/`
-- Confirme se o nome do arquivo no código corresponde ao arquivo real
-
-### **Modelos não aparecem:**
-- Verifique o console do navegador (F12) para erros
-- Teste com modelos .glb de exemplo primeiro
+ 
 
 
 
