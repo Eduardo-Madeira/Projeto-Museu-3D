@@ -1,5 +1,5 @@
 import React, { useState, Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import './App.css';
@@ -71,16 +71,33 @@ function Model({ path, position = [0, 0, 0], rotation = [0, 0, 0], onError }) {
   return <primitive object={scene} scale={2} position={position} rotation={rotation} />;
 }
 
+// Componente interno para forçar renderização quando necessário
+function RenderController() {
+  const { invalidate } = useThree();
+  
+  return (
+    <OrbitControls 
+      enableZoom={true}
+      enablePan={true}
+      enableRotate={true}
+      autoRotate={false}
+      maxPolarAngle={Math.PI / 2}
+      onChange={() => {
+        // Força renderização quando há interação
+        invalidate();
+      }}
+    />
+  );
+}
+
 // Componente para cada card de modelo
 function ModelCard({ modelName, modelPath, position, rotation }) {
   const [error, setError] = useState(false);
-  const canvasRef = React.useRef(null);
 
   return (
     <div className="model-card">
       <div className="canvas-container">
         <Canvas
-          ref={canvasRef}
           camera={{ position: [0, 1, 3], fov: 50 }}
           shadows
           frameloop="demand"
@@ -143,19 +160,7 @@ function ModelCard({ modelName, modelPath, position, rotation }) {
           </Suspense>
 
           {/* Controles de câmera */}
-          <OrbitControls 
-            enableZoom={true}
-            enablePan={true}
-            enableRotate={true}
-            autoRotate={false}
-            maxPolarAngle={Math.PI / 2}
-            onChange={() => {
-              // Força renderização quando há interação
-              if (canvasRef.current) {
-                canvasRef.current.requestRender();
-              }
-            }}
-          />
+          <RenderController />
         </Canvas>
 
         {error && (
