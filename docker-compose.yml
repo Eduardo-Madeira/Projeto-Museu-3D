@@ -1,0 +1,14 @@
+services:
+  museu-3d:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: museu-3d-app
+    network_mode: "host"
+    restart: unless-stopped
+    init: true
+
+networks:
+  museu-network:
+    driver: bridge
+
