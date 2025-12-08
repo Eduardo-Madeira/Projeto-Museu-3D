@@ -40,32 +40,32 @@ function Model({ path, position = [0, 0, 0], rotation = [0, 0, 0] }) {
     const clonedScene = scene.clone(true);
     
     clonedScene.traverse((child) => {
-      if (child.isMesh) {
-        const originalMaterial = child.material;
-        const isArray = Array.isArray(originalMaterial);
-        const materialToProcess = isArray ? originalMaterial[0] : originalMaterial;
-        
-        if (materialToProcess) {
-          child.material = new THREE.MeshStandardMaterial({
-            map: materialToProcess?.map || null,
-            color: materialToProcess?.color || '#ffffff',
-            roughness: 0.3,
-            metalness: 0.1,
-            emissive: '#000000',
-            emissiveIntensity: 0.1,
-          });
-        } else {
-          child.material = new THREE.MeshStandardMaterial({
-            color: '#ffffff',
-            roughness: 0.3,
-            metalness: 0.1,
-          });
+        if (child.isMesh) {
+          const originalMaterial = child.material;
+          const isArray = Array.isArray(originalMaterial);
+          const materialToProcess = isArray ? originalMaterial[0] : originalMaterial;
+          
+          if (materialToProcess) {
+            child.material = new THREE.MeshStandardMaterial({
+              map: materialToProcess?.map || null,
+              color: materialToProcess?.color || '#ffffff',
+              roughness: 0.3,
+              metalness: 0.1,
+              emissive: '#000000',
+              emissiveIntensity: 0.1,
+            });
+          } else {
+            child.material = new THREE.MeshStandardMaterial({
+              color: '#ffffff',
+              roughness: 0.3,
+              metalness: 0.1,
+            });
+          }
+          
+          child.castShadow = true;
+          child.receiveShadow = true;
         }
-        
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
-    });
+      });
   }, [scene]);
 
   return <primitive object={scene} scale={2} position={position} rotation={rotation} />;
@@ -126,15 +126,15 @@ function ModelViewer({ model, onClose }) {
             </div>
           )}
           
-          <Canvas
-            camera={{ position: [0, 1, 3], fov: 50 }}
-            shadows
-            frameloop="demand"
+        <Canvas
+          camera={{ position: [0, 1, 3], fov: 50 }}
+          shadows
+          frameloop="demand"
             dpr={[1, 1.5]} // Reduzido para melhor performance
-            gl={{ 
-              preserveDrawingBuffer: false,
-              powerPreference: "high-performance",
-              antialias: true,
+          gl={{ 
+            preserveDrawingBuffer: false,
+            powerPreference: "high-performance",
+            antialias: true,
               alpha: true,
               failIfMajorPerformanceCaveat: false
             }}
@@ -145,26 +145,26 @@ function ModelViewer({ model, onClose }) {
             }}
             style={{ opacity: loading ? 0 : 1 }}
           >
-            <ambientLight intensity={1.5} />
-            
-            <directionalLight 
+          <ambientLight intensity={1.5} />
+          
+          <directionalLight 
               position={[5, 5, 5]}
-              intensity={1.8}
-              castShadow
+            intensity={1.8}
+            castShadow
               shadow-mapSize-width={1024}
               shadow-mapSize-height={1024}
-              shadow-camera-far={50}
-              shadow-camera-left={-10}
-              shadow-camera-right={10}
-              shadow-camera-top={10}
-              shadow-camera-bottom={-10}
-            />
-            
+            shadow-camera-far={50}
+            shadow-camera-left={-10}
+            shadow-camera-right={10}
+            shadow-camera-top={10}
+            shadow-camera-bottom={-10}
+          />
+          
             <pointLight position={[-3, 2, -2]} intensity={0.6} color="#ffffff" />
             <pointLight position={[3, 2, 2]} intensity={0.4} color="#ffffff" />
             <pointLight position={[0, 3, 0]} intensity={0.5} color="#ffffff" />
 
-            <Suspense fallback={null}>
+          <Suspense fallback={null}>
               <ModelErrorBoundary>
                 <Model 
                   path={`/models/${model.file}`}
@@ -172,7 +172,7 @@ function ModelViewer({ model, onClose }) {
                   rotation={model.rotation}
                 />
               </ModelErrorBoundary>
-            </Suspense>
+          </Suspense>
 
             <OrbitControls 
               enableZoom={true}
@@ -181,7 +181,7 @@ function ModelViewer({ model, onClose }) {
               autoRotate={false}
               maxPolarAngle={Math.PI / 2}
             />
-          </Canvas>
+        </Canvas>
         </div>
         
         <p className="modal-instructions">
@@ -225,7 +225,7 @@ function ModelCard({ model, onClick }) {
           <span className="preview-label">👆 Clique para ver em 3D</span>
         </div>
       </div>
-      
+
       <div className="model-info">
         <h3 className="model-title">{model.name}</h3>
       </div>
@@ -240,7 +240,8 @@ function App() {
   const modelsPerPage = 6; // Aumentado já que não há mais renderização pesada
   
   const models = [
-    { name: 'Vaso', file: 'vaso.glb', thumbnail: 'vaso.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
+    // Modelos originais
+    { name: 'Jarro de Barro', file: 'jarroBarro.glb', thumbnail: 'jarroBarro.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
     { name: 'Barro', file: 'barro.glb', thumbnail: 'barro.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
     { name: 'Bule', file: 'bule.glb', thumbnail: 'bule.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
     { name: 'Cadeira', file: 'cadeira.glb', thumbnail: 'cadeira.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
@@ -250,13 +251,24 @@ function App() {
     { name: 'Lampião', file: 'lampiao.glb', thumbnail: 'lampiao.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
     { name: 'Tigre', file: 'tigre.glb', thumbnail: 'tigre.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
     { name: 'Balaio', file: 'balaio.glb', thumbnail: 'balaio.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
-    { name: 'Chapéu', file: 'Sprint5/chapeu.glb', thumbnail: 'chapeu.webp', position: [0, -2, 0], rotation: [0, 0, 0] },
-    { name: 'Coador de Café', file: 'Sprint5/coador_cafe.glb', thumbnail: 'coadorCafe.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
-    { name: 'Crânio de Onça', file: 'Sprint5/cranio_onca.glb', thumbnail: 'cranioOnca.webp', position: [0, -0.5, 0], rotation: [0, 0, 0] },
-    { name: 'Ferro', file: 'Sprint5/ferro.glb', thumbnail: 'ferro.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
-    { name: 'Máscara Homem', file: 'Sprint5/mascara_homem.glb', thumbnail: 'mascaraHomem.webp', position: [0, -1.3, 0], rotation: [0, 0, 0] },
-    { name: 'Máscara Macaco', file: 'Sprint5/mascara_macaco.glb', thumbnail: 'mascaraMacaco.webp', position: [0, -1.3, 0], rotation: [0, 0, 0] },
-    { name: 'Vela de Mesa', file: 'Sprint5/vela_mesa.glb', thumbnail: 'velaMesa.webp', position: [0, -1.2, 0], rotation: [0, 0, 0] },
+    { name: 'Chapéu', file: 'chapeu.glb', thumbnail: 'chapeu.webp', position: [0, -2, 0], rotation: [0, 0, 0] },
+    { name: 'Coador de Café', file: 'coador_cafe.glb', thumbnail: 'coadorCafe.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
+    { name: 'Crânio de Onça', file: 'cranio_onca.glb', thumbnail: 'cranioOnca.webp', position: [0, -0.5, 0], rotation: [0, 0, 0] },
+    { name: 'Ferro', file: 'ferro.glb', thumbnail: 'ferro.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
+    { name: 'Máscara Homem', file: 'mascara_homem.glb', thumbnail: 'mascaraHomem.webp', position: [0, -1.3, 0], rotation: [0, 0, 0] },
+    { name: 'Máscara Macaco', file: 'mascara_macaco.glb', thumbnail: 'mascaraMacaco.webp', position: [0, -1.3, 0], rotation: [0, 0, 0] },
+    { name: 'Vela de Mesa', file: 'vela_mesa.glb', thumbnail: 'velaMesa.webp', position: [0, -1.2, 0], rotation: [0, 0, 0] },
+    // Novos modelos
+    { name: 'Caixa Registradora', file: 'caixa_registrado.glb', thumbnail: 'caixaRegistradora.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
+    { name: 'Chaleira', file: 'chaleira.glb', thumbnail: 'chaleira.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
+    { name: 'Charrete', file: 'charrete.glb', thumbnail: 'charrete.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
+    { name: 'Cocar Indígena', file: 'cocar_ind.glb', thumbnail: 'cocarIndigena.webp', position: [0, -1.3, 0], rotation: [0, 0, 0] },
+    { name: 'Digitalizadora', file: 'digitalizadora.glb', thumbnail: 'digitalizadora.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
+    { name: 'Máquina de Costura', file: 'maquina_costura.glb', thumbnail: 'maquinaCostura.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
+    { name: 'Máquina de Vídeo', file: 'maquina_video.glb', thumbnail: 'maquinaVideo.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
+    { name: 'Mesa com Cadeira', file: 'mesa_cadeira.glb', thumbnail: 'mesaCadeira.webp', position: [0, -1.2, 0], rotation: [0, 0, 0] },
+    { name: 'Telefone de Mesa', file: 'telefone_mesa.glb', thumbnail: 'teleMesa.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
+    { name: 'Telefone de Parede', file: 'telefone_parede.glb', thumbnail: 'teleParede.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
   ];
 
   const totalPages = Math.ceil(models.length / modelsPerPage);
