@@ -240,7 +240,6 @@ function App() {
   const modelsPerPage = 6; // Aumentado já que não há mais renderização pesada
   
   const models = [
-    // Modelos originais
     { name: 'Jarro de Barro', file: 'jarroBarro.glb', thumbnail: 'jarroBarro.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
     { name: 'Barro', file: 'barro.glb', thumbnail: 'barro.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
     { name: 'Bule', file: 'bule.glb', thumbnail: 'bule.webp', position: [0, 0, 0], rotation: [0, 0, 0] },
@@ -258,7 +257,6 @@ function App() {
     { name: 'Máscara Homem', file: 'mascara_homem.glb', thumbnail: 'mascaraHomem.webp', position: [0, -1.3, 0], rotation: [0, 0, 0] },
     { name: 'Máscara Macaco', file: 'mascara_macaco.glb', thumbnail: 'mascaraMacaco.webp', position: [0, -1.3, 0], rotation: [0, 0, 0] },
     { name: 'Vela de Mesa', file: 'vela_mesa.glb', thumbnail: 'velaMesa.webp', position: [0, -1.2, 0], rotation: [0, 0, 0] },
-    // Novos modelos
     { name: 'Caixa Registradora', file: 'caixa_registrado.glb', thumbnail: 'caixaRegistradora.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
     { name: 'Chaleira', file: 'chaleira.glb', thumbnail: 'chaleira.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
     { name: 'Charrete', file: 'charrete.glb', thumbnail: 'charrete.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
@@ -269,6 +267,7 @@ function App() {
     { name: 'Mesa com Cadeira', file: 'mesa_cadeira.glb', thumbnail: 'mesaCadeira.webp', position: [0, -1.2, 0], rotation: [0, 0, 0] },
     { name: 'Telefone de Mesa', file: 'telefone_mesa.glb', thumbnail: 'teleMesa.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
     { name: 'Telefone de Parede', file: 'telefone_parede.glb', thumbnail: 'teleParede.webp', position: [0, -1, 0], rotation: [0, 0, 0] },
+    { name: 'Arma', file: 'arma.glb', thumbnail: 'arma.webp', position: [0, -0.3, 0], rotation: [0, 0, 0] },
   ];
 
   const totalPages = Math.ceil(models.length / modelsPerPage);
